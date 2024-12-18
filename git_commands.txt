@@ -1,0 +1,280 @@
+Git Basic Messages:
+
+git init
+
+git status
+
+git add filename
+
+# To add all files
+git add .
+
+git commit -m "message"
+
+git log
+
+git log --abbrev-commit
+
+git log --oneline
+
+git config --global core.editor "code --wait"
+
+git commit
+
+
+Amending Commits:
+Suppose you just made a commit and then realized you forgot to include a file
+Rather than making a brand new separate commit you can redo the previous commit using the --amend option.
+
+git add file
+git commit --amend
+
+
+Git Ignore
+
+touch .gitignore
+
+	.DS_Store
+	secrets.txt
+	node_modules/
+	
+	
+git add .gitignore
+
+git commit -m "add git ignore file"
+
+
+Working With Branches:
+
+git switch -c branch-name
+
+git switch branch-name
+
+git switch master
+
+git branch -D deleteMe
+
+git switch recentish-music    # Branch to be renamed
+
+git branch -m 2000s
+
+git switch master
+
+git merge oldies
+
+
+Git Diff
+
+git diff 	 After adding not shown any changes
+git diff HEAD	Lists all changes in the working tree since your last commit
+git diff --staged	Changes between staging area and our last commit
+git diff HEAD filename	
+git diff --staged filename	
+git diff branch1 branch2	
+git diff commit1 commit2	
+
+
+In & Outs of stashing:
+
+Git won't allow to switch if it detects potential conflicts
+
+git status
+git stash
+git switch master
+git switch goodbye
+git stash pop
+git status
+
+Undoing changes & Time Travelling:
+
+git switch master
+
+git checkout 4f1bce4
+
+git status
+
+	Head detached
+	
+git switch -
+
+
+Create Branch based on commit:
+
+git switch master
+
+git checkout 4f1bce4
+
+git switch -c chapter2-redo
+
+git add .
+ 
+git commit -m "message"
+
+git switch master
+
+git checkout HEAD-1
+
+
+Discarding Changes of file with Git checkout:
+
+git checkout HEAD dog.txt
+
+or 
+
+git restore dog.txt
+
+or
+
+git checkout -- dog.txt
+
+
+Restore:
+For not commited changes
+
+git restore dog.txt
+
+git restore --source HEAD~2 cat.txt dog.txt
+
+git restore --staged secrets.txt
+
+
+
+Reset:
+
+rm secrets.txt
+
+git commit -am "mistake commit"
+
+git commit -am "second mistake commit"
+
+git reset <commit hash>
+
+# Reset the repo back to a specific commit. The commits are gone. But the changes will stay.
+
+git switch -c bad-stuff
+
+git add .
+
+git commit -m "add bad stuff"
+
+git switch master
+
+
+# Not preferrable
+
+git reset --hard <commit hash>
+
+git add .
+
+git commit -m "undo this commit please"
+
+git log --oneline
+
+
+Git Revert:
+
+git revert <commit hash>
+
+git add .
+
+git commit -m "make bad commit"
+
+git revert  hash
+
+git log --oneline
+
+# Before push to github "reset" is Ok. After pushing better to use "revert"
+
+
+Git Tags:
+
+Semantic Versioning 
+1.0.1
+Major Release Minor Release Patch release
+
+git clone <url>
+
+git tag
+
+git tag -l "*beta*"
+
+git tag -l "v17*"
+
+git checkout 15.3.1
+
+git switch -c branch_from_tag
+
+git diff tag v17.0.1 v17.0.2
+
+git show v17.0.1
+
+git add .
+ 
+git commit -m "message"
+
+git tag V17.0.3
+
+git tag deleteme
+
+git tag -d deleteme
+
+git push --tags
+
+
+Cherry fix:
+
+Process of picking a particular commit from one branch to another branch
+
+git checkout master
+
+git cherry-pick <commit hash>
+
+Example:
+
+git branch cherrybranch
+
+git branch -a
+
+git checkout cherrybranch
+
+touch newfile.txt
+
+git add .
+
+git commit -m "f1 added in cherry branch"
+
+git commit -am "second commit"  # hash ch3
+
+git commit -am "third commit"
+
+git commit -am "fourth commit"
+
+git log
+
+git switch master
+
+git cherry-pick ch3
+
+
+Cleaning up history with interactive Rebase:
+
+git clone <url>
+
+git log
+
+git rebase -i HEAD~9
+
+pick	Use the commit
+reword 	Use the commit but edit the commit message
+edit	Use commit but stop for amending
+fixup	Use commit contents but meld it in to previous commit and discard the commit message
+drop	Remove commit
+
+
+Undoing a Rebase with respective to Reflog
+
+git rebase -i HEAD~4
+
+git reflog show branchname
+
+git reset --hard <commit hash>
